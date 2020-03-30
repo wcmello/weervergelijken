@@ -13,18 +13,13 @@ class CreateWeerDataTable extends Migration
      */
     public function up()
     {
-        Schema::create('weerData', function (Blueprint $table) {
+        Schema::create('data', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('location_id')->unsigned();
+            $table->unsignedBigInteger('location_id');
             $table->integer('temp');
             $table->integer('rainChance');
             $table->timestamp('dateTime');
             $table->timestamps();
-        });
-        Schema::table('weerData', function($table){
-            $table->foreign('location_id')
-                ->references('id')->on('locations')
-                ->onDelete('cascade');
         });
     }
 
@@ -35,6 +30,6 @@ class CreateWeerDataTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('weerData');
+        Schema::dropIfExists('data');
     }
 }

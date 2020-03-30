@@ -23,10 +23,10 @@ Route::get('/', function () {
 });
 Route::get('/locations', function () {
     /*return LocationResource::collection(Location::all());*/
-    $data = App\Location::find(1)->data();
-    dd($data);
+    $data = App\Location::find(1);
+    dd($data->data());
 });
 Route::get('/data', function () {
-    $data = App\Data::first()->location();
-    dd($data);
+    $data = App\Data::first();
+    dd($data->location());
 });
