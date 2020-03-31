@@ -6,6 +6,7 @@
 
         <title>Laravel</title>
 
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/css/bootstrap.min.css">
@@ -45,18 +46,64 @@
                         <div class="col-12" style="width: 240px;">
                             <h3 class="text-center">Resultaten</h3>
                         </div>
-                        @foreach($data['data'][1]['Recent'] as $location => $data)
+                        @foreach($data['data'][1]['Recent'] as $location => $d)
                         <div class="col" style="margin-top: 50px;margin-bottom: 100px;background-color: rgba(255,5,5,0);">
                             <h4 style="color: rgb(52,130,208);">{{$location}}</h4>
-                            <p>Temperatuur  {{$data['temp']}}<br></p>
-                            <p>Kans op regen: {{$data['rainChance']}}%</p>
-                            <p>Tijd: {{$data['dateTime']}}</p>
+                            <p>Temperatuur: {{$d['temp']}}&#8451;   <br></p>
+                            <p>Kans op regen: {{$d['rainChance']}}%</p>
+                            <p>Tijd van data: {{$d['dateTime']}}</p>
                         </div>
                        
                         @endforeach
-                        <div class="col">
-                            <h3 class="text-center">Grafiek</h3>
-                            <div style="height: 100&amp;;"><canvas data-bs-chart=""></canvas></div>
+                        <div class="col ">
+                            <canvas id="myChart" width="400" height="400"></canvas>
+                            <script>
+                            var ctx = document.getElementById('myChart').getContext('2d');
+                            var myChart = new Chart(ctx, {
+                                type: 'line',
+                                data: 
+                                {
+
+                                    labels: [
+                                    @foreach($data['data'][0]['History'] as $loc => $d)
+                                        @foreach($data['data'][0]['History'][$loc] as $labels)
+                                              '{{$labels['dateTime']}}',       
+                                        @endforeach
+                                        @break
+                                    @endforeach
+                                    ],
+                                    datasets: [
+                                    @foreach($data['data'][0]['History'] as $location => $d)
+                                    {
+                                        label: "{{$location}}",
+                                        data: 
+                                        [
+                                        @foreach($data['data'][0]['History'][$location] as $hdata)
+                                        {{$hdata['temp']}},
+                                        @endforeach
+                                        ],
+                                        backgroundColor: [
+                                            'rgba(' + Math.floor(Math.random() * 256) +',' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 0.2)',
+                                        ],
+                                        borderColor: [
+                                            'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 1)',
+                                        ],
+                                        borderWidth: 1
+                                    },
+                                    @endforeach
+                                    ]
+                                },
+                                options: {
+                                    scales: {
+                                        yAxes: [{
+                                            ticks: {
+                                                beginAtZero: true
+                                            }
+                                        }]
+                                    }
+                                }
+                            });
+                            </script>
                         </div>
                     </div>
                 </div>

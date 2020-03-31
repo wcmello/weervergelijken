@@ -25,7 +25,7 @@ class APIController extends Controller
 
 	    	//vullen van historische data met een limiet op 10 recente data
 	    	$historyarray['History'][$location] = $historisch->data()->latest()->limit(10)->get(); 
-
+	    	$historyarray['History'][$location] = $historyarray['History'][$location]->sortBy('dateTime');
 	    	//vullen van recente data
 	    	$recentarray['Recent'][$location] = $historisch->data()->latest()->first();
 
