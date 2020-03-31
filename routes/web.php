@@ -21,12 +21,11 @@ use App\Http\Resources\Data as DataResource;
 Route::get('/', function () {
     return view('main');
 });
-Route::get('/locations', function () {
-    /*return LocationResource::collection(Location::all());*/
-    $data = App\Location::find(1);
-    dd($data->data());
-});
+Route::post('/', 'ViewController@load');
+Route::get('/locations', 'APIController@show');
+
 Route::get('/data', function () {
-    $data = App\Data::first();
-    dd($data->location());
+	$data = App\Data::first();
+    dd($data->location);
+
 });

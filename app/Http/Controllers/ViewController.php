@@ -1,0 +1,45 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class ViewController extends Controller
+{
+    public function load(Request $request){
+    	if ($request->plaats1 == "" || $request->plaats2 == "") {
+    		 return back()->withErrors(['Voer alle 2 plaatsen in']);
+    	}
+    	else{
+    		$data = [];
+    		$data['data'] = $this->request($request->plaats1, $request->plaats2);
+    		return view('main', compact('data'));
+    	}
+
+    }
+    private function request($loc1, $loc2){
+
+    		//nieuwe curl request
+    		  $curl = curl_init();
+			  curl_setopt_array($curl, array(
+			//curl URL haalt URL en KEY uit .env file
+			  CURLOPT_URL => "http://weer.test/locations?location=" . $loc1 . "," . $loc2,
+			  CURLOPT_RETURNTRANSFER => true,
+			  CURLOPT_ENCODING => "",
+			  CURLOPT_MAXREDIRS => 10,
+			  CURLOPT_TIMEOUT => 0,
+			  CURLOPT_FOLLOWLOCATION => true,
+			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+			  CURLOPT_CUSTOMREQUEST => "GET",
+			));
+			//response zetten naar resultaat CURL
+			$response = curl_exec($curl);
+
+			curl_close($curl);
+			//response omzetten naar ARRAY
+			$response = json_decode($response, true);
+   			
+   			return $response; 	
+
+    }
+}

@@ -8,6 +8,6 @@ class Location extends Model
 {
     public function data()
     {
-        return $this->hasMany(Data::class);
+        return $this->hasMany('App\Data');
     }
 }
