@@ -24,6 +24,12 @@ class ViewController extends Controller
     	{
     		$data = [];
     		$data['data'] = $this->request($request->plaats1, $request->plaats2);
+
+    		$colors = [
+    			$request->plaats1 => 'rgba(252,7,11,',
+    			$request->plaats2 => 'rgba(7,134,252,'
+    		];
+    		array_push($data, $colors);
     		return view('main', compact('data'));
     	}
     }

@@ -24,10 +24,11 @@ class APIController extends Controller
 	    	$historisch = Location::where('name', $location)->first();
 
 	    	//vullen van historische data met een limiet op 10 recente data
-	    	$historyarray['History'][$location] = $historisch->data()->latest()->limit(10)->get(); 
-
+	    	$historyarray['History']['40'][$location] = $historisch->data()->latest()->limit(10)->get(); 
+	    	$historyarray['History']['80'][$location] = $historisch->data()->latest()->limit(20)->get(); 
 	    	//sorteren van data zodat oudste data eerst komt
-	    	$historyarray['History'][$location] = $historyarray['History'][$location]->sortBy('dateTime');
+	    	$historyarray['History']['40'][$location] = $historyarray['History']['40'][$location]->sortBy('dateTime');
+	    	$historyarray['History']['80'][$location] = $historyarray['History']['80'][$location]->sortBy('dateTime'); 
 	    	//vullen van recente data
 	    	$recentarray['Recent'][$location] = $historisch->data()->latest()->first();
 

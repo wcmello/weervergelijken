@@ -54,77 +54,335 @@
                         </div>
                        
                         @endforeach
-                        <div class="row"> 
-                            <div class="col col-md-6 ">
-                                <canvas id="myChart" width="400" height="400"></canvas>
-                                <script>
-                                var ctx = document.getElementById('myChart').getContext('2d');
-                                var myChart = new Chart(ctx, {
-                                    type: 'line',
-                                    data: 
-                                    {
+                        <!-- Grafieken -->
 
-                                        labels: [
-                                        @foreach($data['data'][0]['History'] as $loc => $d)
-                                            @foreach($data['data'][0]['History'][$loc] as $labels)
-                                                  '{{$labels['dateTime']}}',       
-                                            @endforeach
-                                            @break
-                                        @endforeach
-                                        ],
-                                        datasets: [
-                                        @foreach($data['data'][0]['History'] as $location => $d)
+                        <div class="row">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="temp-tab" data-toggle="tab" href="#temp" role="tab" aria-controls="temp" aria-selected="true">Temperatuur</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Neerslag</a>
+                              </li>
+                                <li class="nav-item">
+                                <a class="nav-link disabled" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">40 uur</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                              <div class="tab-pane fade show active" id="temp" role="tabpanel" aria-labelledby="temp-tab">
+                                <div class="col ">
+                                    <canvas id="myChart" width="400" height="400"></canvas>
+                                    <script>
+                                    var ctx = document.getElementById('myChart').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: 
                                         {
-                                            label: "{{$location}}",
-                                            data: 
-                                            [
-                                            @foreach($data['data'][0]['History'][$location] as $hdata)
-                                            {{$hdata['temp']}},
+
+                                            labels: [
+                                            @foreach($data['data'][0]['History']['40'] as $loc => $d)
+                                                @foreach($data['data'][0]['History']['40'][$loc] as $labels)
+                                                      '{{$labels['dateTime']}}',       
+                                                @endforeach
+                                                @break
                                             @endforeach
                                             ],
-                                            backgroundColor: [
-                                                'rgba(' + Math.floor(Math.random() * 256) +',' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 0.2)',
-                                            ],
-                                            borderColor: [
-                                                'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 1)',
-                                            ],
-                                            borderWidth: 1
+                                            datasets: [
+                                            @foreach($data['data'][0]['History']['40'] as $location => $d)
+                                            {
+                                                label: "{{$location}}",
+                                                data: 
+                                                [
+                                                @foreach($data['data'][0]['History']['40'][$location] as $hdata)
+                                                {{$hdata['temp']}},
+                                                @endforeach
+                                                ],
+                                                backgroundColor: [
+                                                    '{{$data[0][$location]}} 0.2)',
+                                                ],
+                                                borderColor: [
+                                                    '{{$data[0][$location]}} 1)',
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            @endforeach
+                                            ]
                                         },
-                                        @endforeach
-                                        ]
-                                    },
-                                    options: {
-                                        scales: {
-                                            yAxes: [{
-                                                ticks: {
-                                                    beginAtZero: true
-                                                },
-                                                scaleLabel: {
-                                                    display: true,
-                                                    fontSize: 14,
-                                                    labelString: "Temperatuur in Celcius",
-                                                }   
-                                            
-                                            }],
-                                            xAxes: [{
-                                                scaleLabel: {
-                                                    display: true,
-                                                    fontSize: 14,
-                                                    labelString: "Tijdstempel",
-                                                }   
-                                            
-                                            }]
-                                        },
-                                        title: {
-                                            display: true,
-                                            text: 'Temperatuur gegevens'
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Temperatuur in Celcius",
+                                                    }   
+                                                
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Tijdstempel",
+                                                    }   
+                                                
+                                                }]
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Temperatuur gegevens'
+                                            }
                                         }
-                                    }
-                                });
-                                </script>
+                                    });
+                                    </script>
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                                <div class="col" style="width:400px; height: 400px;">
+                                    <canvas id="myChart2" width="400" height="400"></canvas>
+                                     <script>
+                                    var ctx = document.getElementById('myChart2').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: 
+                                        {
+
+                                            labels: [
+                                            @foreach($data['data'][0]['History']['40'] as $loc => $d)
+                                                @foreach($data['data'][0]['History']['40'][$loc] as $labels)
+                                                      '{{$labels['dateTime']}}',       
+                                                @endforeach
+                                                @break
+                                            @endforeach
+                                            ],
+                                            datasets: [
+                                            @foreach($data['data'][0]['History']['40'] as $location => $d)
+                                            {
+                                                label: "{{$location}}",
+                                                data: 
+                                                [
+                                                @foreach($data['data'][0]['History']['40'][$location] as $hdata)
+                                                {{$hdata['rainChance']}},
+                                                @endforeach
+                                                ],
+                                                backgroundColor: [
+                                                    '{{$data[0][$location]}} 0.2)',
+                                                ],
+                                                borderColor: [
+                                                    '{{$data[0][$location]}} 1)',
+                                                ],
+                                                borderWidth: 1
+                                            },
+                                            @endforeach
+                                            ]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Neerslagkans in %",
+                                                    }   
+                                                
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Tijdstempel",
+                                                    }   
+                                                
+                                                }]
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Neerslag gegevens'
+                                            }
+                                        }
+                                    });
+                                    </script>                            
+                                </div>
+                              </div>
+
                             </div>
+                           
+                        </div>
+                        <div class="row">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                              <li class="nav-item">
+                                <a class="nav-link active" id="temp1-tab" data-toggle="tab" href="#temp1" role="tab" aria-controls="temp" aria-selected="true">Temperatuur</a>
+                              </li>
+                              <li class="nav-item">
+                                <a class="nav-link" id="profile1-tab" data-toggle="tab" href="#profile1" role="tab" aria-controls="profile" aria-selected="false">Neerslag</a>
+                              </li>
+                                <li class="nav-item">
+                                <a class="nav-link disabled" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">80 uur</a>
+                              </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                              <div class="tab-pane fade show active" id="temp1" role="tabpanel" aria-labelledby="temp1-tab">
+                                <div class="col ">
+                                    <canvas id="myChart3" width="400" height="400"></canvas>
+                                    <script>
+                                    var ctx = document.getElementById('myChart3').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: 
+                                        {
+
+                                            labels: [
+                                            @foreach($data['data'][0]['History']['80'] as $loc => $d)
+                                                @foreach($data['data'][0]['History']['80'][$loc] as $labels)
+                                                    @if($loop->index % 2 == 0)
+                                                          '{{$labels['dateTime']}}',
+                                                    @endif       
+                                                @endforeach
+                                                @break
+                                            @endforeach
+                                            ],
+                                            datasets: [
+                                            @foreach($data['data'][0]['History']['80'] as $location => $d)
+                                                
+                                                {
+                                                    label: "{{$location}}",
+                                                    data: 
+                                                    [
+                                                    @foreach($data['data'][0]['History']['80'][$location] as $hdata)
+                                                    @if($loop->index % 2 == 0)
+                                                    {{$hdata['temp']}},
+                                                    @endif
+                                                    @endforeach
+                                                    ],
+                                                    backgroundColor: [
+                                                        '{{$data[0][$location]}} 0.2)',
+                                                    ],
+                                                    borderColor: [
+                                                        '{{$data[0][$location]}} 1)',
+                                                    ],
+                                                    borderWidth: 1
+                                                },
+                                                
+                                            @endforeach
+                                            ]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Temperatuur in Celcius",
+                                                    }   
+                                                
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Tijdstempel",
+                                                    }   
+                                                
+                                                }]
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Temperatuur gegevens'
+                                            }
+                                        }
+                                    });
+                                    </script>
+                                </div>
+                              </div>
+                              <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile1-tab">
+                                <div class="col" style="width:400px; height: 400px;">
+                                    <canvas id="myChart4" width="400" height="400"></canvas>
+                                     <script>
+                                    var ctx = document.getElementById('myChart4').getContext('2d');
+                                    var myChart = new Chart(ctx, {
+                                        type: 'line',
+                                        data: 
+                                        {
+
+                                            labels: [
+                                            @foreach($data['data'][0]['History']['80'] as $loc => $d)
+                                                @foreach($data['data'][0]['History']['80'][$loc] as $labels)
+                                                    @if($loop->index % 2 == 0)
+                                                      '{{$labels['dateTime']}}',     
+                                                    @endif
+                                                @endforeach
+                                                @break
+                                            @endforeach
+                                            ],
+                                            datasets: [
+                                            @foreach($data['data'][0]['History']['80'] as $location => $d)
+                                                {
+                                                    label: "{{$location}}",
+                                                    data: 
+                                                    [
+                                                    @foreach($data['data'][0]['History']['80'][$location] as $hdata)
+                                                        @if($loop->index % 2 == 0)
+                                                        {{$hdata['rainChance']}},
+                                                        @endif
+                                                    @endforeach
+                                                    ],
+                                                    backgroundColor: [
+                                                        '{{$data[0][$location]}} 0.2)',
+                                                    ],
+                                                    borderColor: [
+                                                        '{{$data[0][$location]}} 1)',
+                                                    ],
+                                                    borderWidth: 1
+                                                },
+                                                
+                                            @endforeach
+                                            ]
+                                        },
+                                        options: {
+                                            scales: {
+                                                yAxes: [{
+                                                    ticks: {
+                                                        beginAtZero: true
+                                                    },
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Neerslagkans in %",
+                                                    }   
+                                                
+                                                }],
+                                                xAxes: [{
+                                                    scaleLabel: {
+                                                        display: true,
+                                                        fontSize: 14,
+                                                        labelString: "Tijdstempel",
+                                                    }   
+                                                
+                                                }]
+                                            },
+                                            title: {
+                                                display: true,
+                                                text: 'Neerslag gegevens'
+                                            }
+                                        }
+                                    });
+                                    </script>                            
+                                </div>
+                              </div>
+
+                            </div>
+                           
                         </div>
                     </div>
+
                 </div>
                 @endisset
             </div>
