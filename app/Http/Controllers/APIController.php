@@ -25,6 +25,8 @@ class APIController extends Controller
 
 	    	//vullen van historische data met een limiet op 10 recente data
 	    	$historyarray['History'][$location] = $historisch->data()->latest()->limit(10)->get(); 
+
+	    	//sorteren van data zodat oudste data eerst komt
 	    	$historyarray['History'][$location] = $historyarray['History'][$location]->sortBy('dateTime');
 	    	//vullen van recente data
 	    	$recentarray['Recent'][$location] = $historisch->data()->latest()->first();
@@ -64,8 +66,8 @@ class APIController extends Controller
 
 			//nieuwe data instance aanmaken om te storen in de database
 			$data = new Data;
-			$data->temp = $response['liveweer']['0']['temp'];
-			$data->rainChance = $response['liveweer']['0']['d0neerslag'];
+			$data->temp = round($response['liveweer']['0']['temp']);
+			$data->rainChance = round($response['liveweer']['0']['d0neerslag']);
 			$data->location_id = $location->id;
 			$data->save();
 
