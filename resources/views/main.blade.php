@@ -19,7 +19,7 @@
     <div>
 
         <nav class="navbar navbar-light navbar-expand-md navigation-clean">
-            <div class="container"><a class="navbar-brand" href="#">Weer Vergelijken</a><button class="navbar-toggler" data-toggle="collapse"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button></div>
+            <div class="container"><a class="navbar-brand" href="#">Weer Vergelijken</a>
         </nav>
         <div class="container">
             <div class="row">
@@ -40,14 +40,13 @@
                     </form>
                 </div>
                 @isset($data)
-
                 <div class="col col-md-6 col-xl-6" id="weer">
                     <div class="row" style="padding: 0px;height: 600px;">
                         <div class="col-12" style="width: 240px;">
-                            <h3 class="text-center">Resultaten</h3>
+                            <h5 class="text-center">Resultaten</h5>
                         </div>
                         @foreach($data['data'][1]['Recent'] as $location => $d)
-                        <div class="col" style="margin-top: 50px;margin-bottom: 100px;background-color: rgba(255,5,5,0);">
+                        <div class="col " style="margin-right:1px; margin-bottom: 100px; background-color: rgba(255,5,5,0);">
                             <h4 style="color: rgb(52,130,208);">{{$location}}</h4>
                             <p>Temperatuur: {{$d['temp']}}&#8451;   <br></p>
                             <p>Kans op regen: {{$d['rainChance']}}%</p>
@@ -55,67 +54,81 @@
                         </div>
                        
                         @endforeach
-                        <div class="col ">
-                            <canvas id="myChart" width="400" height="400"></canvas>
-                            <script>
-                            var ctx = document.getElementById('myChart').getContext('2d');
-                            var myChart = new Chart(ctx, {
-                                type: 'line',
-                                data: 
-                                {
-
-                                    labels: [
-                                    @foreach($data['data'][0]['History'] as $loc => $d)
-                                        @foreach($data['data'][0]['History'][$loc] as $labels)
-                                              '{{$labels['dateTime']}}',       
-                                        @endforeach
-                                        @break
-                                    @endforeach
-                                    ],
-                                    datasets: [
-                                    @foreach($data['data'][0]['History'] as $location => $d)
+                        <div class="row"> 
+                            <div class="col col-md-6 ">
+                                <canvas id="myChart" width="400" height="400"></canvas>
+                                <script>
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                var myChart = new Chart(ctx, {
+                                    type: 'line',
+                                    data: 
                                     {
-                                        label: "{{$location}}",
-                                        data: 
-                                        [
-                                        @foreach($data['data'][0]['History'][$location] as $hdata)
-                                        {{$hdata['temp']}},
+
+                                        labels: [
+                                        @foreach($data['data'][0]['History'] as $loc => $d)
+                                            @foreach($data['data'][0]['History'][$loc] as $labels)
+                                                  '{{$labels['dateTime']}}',       
+                                            @endforeach
+                                            @break
                                         @endforeach
                                         ],
-                                        backgroundColor: [
-                                            'rgba(' + Math.floor(Math.random() * 256) +',' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 0.2)',
-                                        ],
-                                        borderColor: [
-                                            'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 1)',
-                                        ],
-                                        borderWidth: 1
+                                        datasets: [
+                                        @foreach($data['data'][0]['History'] as $location => $d)
+                                        {
+                                            label: "{{$location}}",
+                                            data: 
+                                            [
+                                            @foreach($data['data'][0]['History'][$location] as $hdata)
+                                            {{$hdata['temp']}},
+                                            @endforeach
+                                            ],
+                                            backgroundColor: [
+                                                'rgba(' + Math.floor(Math.random() * 256) +',' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 0.2)',
+                                            ],
+                                            borderColor: [
+                                                'rgba(' + Math.floor(Math.random() * 256) + ', ' + Math.floor(Math.random() * 256) +', ' + Math.floor(Math.random() * 256) +', 1)',
+                                            ],
+                                            borderWidth: 1
+                                        },
+                                        @endforeach
+                                        ]
                                     },
-                                    @endforeach
-                                    ]
-                                },
-                                options: {
-                                    scales: {
-                                        yAxes: [{
-                                            ticks: {
-                                                beginAtZero: true
-                                            }
-                                        }]
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                },
+                                                scaleLabel: {
+                                                    display: true,
+                                                    fontSize: 14,
+                                                    labelString: "Temperatuur in Celcius",
+                                                }   
+                                            
+                                            }],
+                                            xAxes: [{
+                                                scaleLabel: {
+                                                    display: true,
+                                                    fontSize: 14,
+                                                    labelString: "Tijdstempel",
+                                                }   
+                                            
+                                            }]
+                                        },
+                                        title: {
+                                            display: true,
+                                            text: 'Temperatuur gegevens'
+                                        }
                                     }
-                                }
-                            });
-                            </script>
+                                });
+                                </script>
+                            </div>
                         </div>
-
                     </div>
                 </div>
                 @endisset
             </div>
         </div>
-    </div>
-    <div class="footer-basic">
-        <footer>
-            <p class="copyright">Weer Vergelijken © 2020</p>
-        </footer>
     </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>

@@ -3,19 +3,29 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Location;
 
 class ViewController extends Controller
 {
     public function load(Request $request){
     	if ($request->plaats1 == "" || $request->plaats2 == "") {
-    		 return back()->withErrors(['Voer alle 2 plaatsen in']);
+    		return back()->withErrors(['Voer alle 2 plaatsen in']);
     	}
-    	else{
+    	elseif(!Location::where('name', $request->plaats1)->first() && !Location::where('name', $request->plaats2)->first()){
+    		return back()->withErrors(['Geen data van plaats: ' . $request->plaats1 . " & " . $request->plaats2]);
+    	}
+    	elseif(!Location::where('name', $request->plaats1)->first()){
+    		return back()->withErrors(['Geen data van plaats: ' . $request->plaats1]);
+    	}
+    	elseif(!Location::where('name', $request->plaats2)->first() ){
+    		return back()->withErrors(['Geen data van plaats: '.  $request->plaats2]);
+    	}
+    	else
+    	{
     		$data = [];
     		$data['data'] = $this->request($request->plaats1, $request->plaats2);
     		return view('main', compact('data'));
     	}
-
     }
     private function request($loc1, $loc2){
 
