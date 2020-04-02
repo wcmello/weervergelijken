@@ -28,7 +28,7 @@
                     
                     <form style="margin-top: 0;padding: 0px;text-align: center;" action="/" method="post">
 
-                        <div class="form-group" style="margin: 0px;margin-top: 157px;">
+                        <div class="form-group" style="margin: 0px;margin-top: 30%;">
                             @if($errors->any())
                             <div class="p-3 mb-2 bg-danger text-white">{{$errors->first()}}</div>
                             @endif
@@ -56,7 +56,7 @@
                         @endforeach
                         <!-- Grafieken -->
 
-                        <div class="row">
+                        <div class="row  justify-content-center">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                               <li class="nav-item">
                                 <a class="nav-link active" id="temp-tab" data-toggle="tab" href="#temp" role="tab" aria-controls="temp" aria-selected="true">Temperatuur</a>
@@ -71,7 +71,7 @@
                             <div class="tab-content" id="myTabContent">
                               <div class="tab-pane fade show active" id="temp" role="tabpanel" aria-labelledby="temp-tab">
                                 <div class="col ">
-                                    <canvas id="myChart" width="400" height="400"></canvas>
+                                    <canvas id="myChart" width="350" height="400" style=""></canvas>
                                     <script>
                                     var ctx = document.getElementById('myChart').getContext('2d');
                                     var myChart = new Chart(ctx, {
@@ -141,7 +141,7 @@
                               </div>
                               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="col" style="width:400px; height: 400px;">
-                                    <canvas id="myChart2" width="400" height="400"></canvas>
+                                    <canvas id="myChart2" width="350" height="400"></canvas>
                                      <script>
                                     var ctx = document.getElementById('myChart2').getContext('2d');
                                     var myChart = new Chart(ctx, {
@@ -213,7 +213,7 @@
                             </div>
                            
                         </div>
-                        <div class="row">
+                        <div class="row  justify-content-center">
                             <ul class="nav nav-tabs" id="myTab" role="tablist">
                               <li class="nav-item">
                                 <a class="nav-link active" id="temp1-tab" data-toggle="tab" href="#temp1" role="tab" aria-controls="temp" aria-selected="true">Temperatuur</a>
@@ -228,7 +228,7 @@
                             <div class="tab-content" id="myTabContent">
                               <div class="tab-pane fade show active" id="temp1" role="tabpanel" aria-labelledby="temp1-tab">
                                 <div class="col ">
-                                    <canvas id="myChart3" width="400" height="400"></canvas>
+                                    <canvas id="myChart3" width="350" height="400"></canvas>
                                     <script>
                                     var ctx = document.getElementById('myChart3').getContext('2d');
                                     var myChart = new Chart(ctx, {
@@ -304,7 +304,7 @@
                               </div>
                               <div class="tab-pane fade" id="profile1" role="tabpanel" aria-labelledby="profile1-tab">
                                 <div class="col" style="width:400px; height: 400px;">
-                                    <canvas id="myChart4" width="400" height="400"></canvas>
+                                    <canvas id="myChart4" width="350" height="400"></canvas>
                                      <script>
                                     var ctx = document.getElementById('myChart4').getContext('2d');
                                     var myChart = new Chart(ctx, {
