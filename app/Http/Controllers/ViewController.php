@@ -8,17 +8,10 @@ use App\Location;
 class ViewController extends Controller
 {
     public function load(Request $request){
-    	if ($request->plaats1 == "" || $request->plaats2 == "") {
-    		return back()->withErrors(['Voer alle 2 plaatsen in']);
-    	}
-    	elseif(!Location::where('name', $request->plaats1)->first() && !Location::where('name', $request->plaats2)->first()){
-    		return back()->withErrors(['Geen data van plaats: ' . $request->plaats1 . " & " . $request->plaats2]);
-    	}
-    	elseif(!Location::where('name', $request->plaats1)->first()){
-    		return back()->withErrors(['Geen data van plaats: ' . $request->plaats1]);
-    	}
-    	elseif(!Location::where('name', $request->plaats2)->first() ){
-    		return back()->withErrors(['Geen data van plaats: '.  $request->plaats2]);
+    	$result = $this->val($request);
+    	if (is_string($result)) {
+    		return back()->withErrors([$result]);
+    		
     	}
     	else
     	{
@@ -57,5 +50,24 @@ class ViewController extends Controller
    			
    			return $response; 	
 
+    }
+    private function val($request){
+    	$p1 = $request->plaats1;
+    	$p2 = $request->plaats2;
+    	if ($p1 == "" || $p2 == "") {
+    		return $error = 'Voer alle 2 plaatsen in';
+    	}
+    	elseif(!Location::where('name', $p1)->first() && !Location::where('name', $p2)->first()){
+    		return $error = 'Geen data van plaats: ' . $p1 . " & " . $p2;
+    	}
+    	elseif(!Location::where('name', $p1)->first()){
+    		return $error = 'Geen data van plaats: ' . $p1;
+    	}
+    	elseif(!Location::where('name', $p2)->first() ){
+    		return $error = 'Geen data van plaats: '.  $p2;
+    	}
+    	else{
+    		return true;
+    	}
     }
 }
