@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
+        //deze command word elke 4 uur gecalled
         $schedule->call(function () {
             $controller = new \App\Http\Controllers\APIController();
             $controller->getData();

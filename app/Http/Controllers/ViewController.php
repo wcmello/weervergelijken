@@ -7,22 +7,36 @@ use App\Location;
 
 class ViewController extends Controller
 {
+	//functie die opgeroepen word als iemand locaties invoerd en op vergelijken drukt
     public function load(Request $request){
+    	//valideerd de request met de locaties via een private function in deze controller
     	$result = $this->val($request);
+
+    	//Controleerd het resultaat van de validatie
     	if (is_string($result)) {
+    		//stuurt errors terug die de validatie meegestuurd heeft
     		return back()->withErrors([$result]);
     		
     	}
+
+    	//als er geen errors zijn word dit uitgevoerd
     	else
     	{
+    		//maakt een data array aan
     		$data = [];
+
+    		//Zoekt de data op vanuit de request functie, heeft 2 plaatsnamen nodig
     		$data['data'] = $this->request($request->plaats1, $request->plaats2);
 
+    		//color array die kleuren aangeeft voor de grafiek
     		$colors = [
     			$request->plaats1 => 'rgba(252,7,11,',
     			$request->plaats2 => 'rgba(7,134,252,'
     		];
+    		//Pushed te color array in het data array om een compleet pakketje te maken
     		array_push($data, $colors);
+
+    		//Stuurt door naar de main view met de opgevraagde data
     		return view('main', compact('data'));
     	}
     }
@@ -52,21 +66,28 @@ class ViewController extends Controller
 
     }
     private function val($request){
+    	//set de 2 plaatsnamen
     	$p1 = $request->plaats1;
     	$p2 = $request->plaats2;
+
+    	//check of de plaatsnamen beide zijn ingevoerd
     	if ($p1 == "" || $p2 == "") {
     		return $error = 'Voer alle 2 plaatsen in';
     	}
+    	//check of beide locaties bestaan
     	elseif(!Location::where('name', $p1)->first() && !Location::where('name', $p2)->first()){
     		return $error = 'Geen data van plaats: ' . $p1 . " & " . $p2;
     	}
+    	//checked individueel locatie nr 1
     	elseif(!Location::where('name', $p1)->first()){
     		return $error = 'Geen data van plaats: ' . $p1;
     	}
+    	//checked individueel locatie nr 2
     	elseif(!Location::where('name', $p2)->first() ){
     		return $error = 'Geen data van plaats: '.  $p2;
     	}
     	else{
+    		//returned true als alle data correct is
     		return true;
     	}
     }

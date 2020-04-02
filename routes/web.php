@@ -17,15 +17,12 @@ use App\Http\Resources\Data as DataResource;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//main route
 Route::get('/', function () {
     return view('main');
 });
+//main route on post
 Route::post('/', 'ViewController@load');
+
+//main api route requires ?location= parameter with cities split by commas
 Route::get('/locations', 'APIController@show');
-
-Route::get('/data', function () {
-	$data = App\Data::first();
-    dd($data->location);
-
-});
