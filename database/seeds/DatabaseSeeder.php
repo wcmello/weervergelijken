@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Location;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+        $loc = ['Gorredijk', 'Heerenveen'];
+    	foreach ($loc as $l) {
+    		$location = new Location;
+    		$location->name = $l;
+    		$location->save();
+    	}
     }
 }

@@ -26,5 +26,6 @@ Route::post('/', 'ViewController@load');
 
 //main api route requires ?location= parameter with cities split by commas
 Route::get('/locations', 'APIController@show');
-
+/*
 Route::get('/install', 'InstallController@dbinstall');
+*/
