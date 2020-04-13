@@ -49,7 +49,7 @@ class APIController extends Controller
     		  $curl = curl_init();
 			  curl_setopt_array($curl, array(
 			//curl URL haalt URL en KEY uit .env file
-			  CURLOPT_URL => env('API_URL')."?key=".env('API_KEY')."&locatie=".$location->name."",
+			  CURLOPT_URL => config('api.api_url')."?key=".config('api.api_key')."&locatie=".$location->name."",
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_ENCODING => "",
 			  CURLOPT_MAXREDIRS => 10,

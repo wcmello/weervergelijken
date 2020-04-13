@@ -42,6 +42,7 @@ class ViewController extends Controller
     	}
     }
     private function request($loc1, $loc2){
+            
               $url = BaseRequest::getHost();
     		//nieuwe curl request
     		  $curl = curl_init();

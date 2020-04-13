@@ -21,6 +21,7 @@ use App\Http\Resources\Data as DataResource;
 if (file_exists('../storage/installed')) {
 	Route::get('/', function () {
 	    return view('main');
+
 	});
 } else {
 	Route::get('/', function () {
