@@ -46,7 +46,7 @@ class ViewController extends Controller
     		  $curl = curl_init();
 			  curl_setopt_array($curl, array(
 			//curl URL haalt URL en KEY uit .env file
-			  CURLOPT_URL => "http://weer.test/locations?location=" . $loc1 . "," . $loc2,
+			  CURLOPT_URL => env('APP_URL')."/locations?location=" . $loc1 . "," . $loc2,
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_ENCODING => "",
 			  CURLOPT_MAXREDIRS => 10,
