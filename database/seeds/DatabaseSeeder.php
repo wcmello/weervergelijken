@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Seeder;
 use App\Location;
+use App\Data;
 
 class DatabaseSeeder extends Seeder
 {
@@ -17,6 +18,15 @@ class DatabaseSeeder extends Seeder
     		$location = new Location;
     		$location->name = $l;
     		$location->save();
+
+            $data = new Data;
+
+            $data->location_id = $location->id;
+            $data->temp = 0;
+            $data->rainChance = 0;
+            $data->dateTime = now();
+            $data->save();
     	}
+
     }
 }
