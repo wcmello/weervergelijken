@@ -17,10 +17,18 @@ use App\Http\Resources\Data as DataResource;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+if (file_exists('../storage/installed')) {
+	Route::get('/', function () {
+	    return view('main');
+	});
+} else {
+	Route::get('/', function () {
+	    echo 'please go to /install';
+	});
+}
 //main route
-Route::get('/', function () {
-    return view('main');
-});
+
 //main route on post
 Route::post('/', 'ViewController@load');
 
