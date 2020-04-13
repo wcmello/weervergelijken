@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Request as BaseRequest;
 use App\Location;
 
 class ViewController extends Controller
@@ -41,12 +42,12 @@ class ViewController extends Controller
     	}
     }
     private function request($loc1, $loc2){
-
+              $url = BaseRequest::getHost();
     		//nieuwe curl request
     		  $curl = curl_init();
 			  curl_setopt_array($curl, array(
 			//curl URL haalt URL en KEY uit .env file
-			  CURLOPT_URL => env('APP_URL')."/locations?location=" . $loc1 . "," . $loc2,
+			  CURLOPT_URL => $url."/locations?location=" . $loc1 . "," . $loc2,
 			  CURLOPT_RETURNTRANSFER => true,
 			  CURLOPT_ENCODING => "",
 			  CURLOPT_MAXREDIRS => 10,
