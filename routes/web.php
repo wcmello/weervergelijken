@@ -24,7 +24,7 @@ if (file_exists('../storage/installed')) {
 	});
 } else {
 	Route::get('/', function () {
-	    echo 'please go to /install';
+	    return redirect('install');
 	});
 }
 //main route
