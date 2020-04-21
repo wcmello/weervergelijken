@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Request as BaseRequest;
 use App\Location;
+use Illuminate\Support\Facades\Http;
 
 class ViewController extends Controller
 {
 	//functie die opgeroepen word als iemand locaties invoerd en op vergelijken drukt
     public function load(Request $request){
     	//valideerd de request met de locaties via een private function in deze controller
-    	$result = $this->val($request);
+    	$result = $this->validator($request);
 
     	//Controleerd het resultaat van de validatie
     	if (is_string($result)) {
@@ -42,32 +43,33 @@ class ViewController extends Controller
     	}
     }
     private function request($loc1, $loc2){
-            
-              $url = BaseRequest::getHost();
-    		//nieuwe curl request
-    		  $curl = curl_init();
-			  curl_setopt_array($curl, array(
-			//curl URL haalt URL en KEY uit .env file
-			  CURLOPT_URL => $url."/locations?location=" . $loc1 . "," . $loc2,
-			  CURLOPT_RETURNTRANSFER => true,
-			  CURLOPT_ENCODING => "",
-			  CURLOPT_MAXREDIRS => 10,
-			  CURLOPT_TIMEOUT => 0,
-			  CURLOPT_FOLLOWLOCATION => true,
-			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-			  CURLOPT_CUSTOMREQUEST => "GET",
-			));
-			//response zetten naar resultaat CURL
-			$response = curl_exec($curl);
 
-			curl_close($curl);
-			//response omzetten naar ARRAY
-			$response = json_decode($response, true);
-   			
-   			return $response; 	
+              $url = BaseRequest::getHttpHost();
+              str_replace('https://', '', $url);
+    		  $curl = curl_init();
+    		  curl_setopt_array($curl, array(
+    			//curl URL haalt URL en KEY uit .env file
+    			  CURLOPT_URL => $url."/locations?location=" . $loc1 . "," . $loc2,
+    			  CURLOPT_RETURNTRANSFER => true,
+    			  CURLOPT_ENCODING => "",
+    			  CURLOPT_MAXREDIRS => 10,
+    			  CURLOPT_TIMEOUT => 5,
+    			  CURLOPT_FOLLOWLOCATION => true,
+    			  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+    			  CURLOPT_CUSTOMREQUEST => "GET",
+    		  ));
+    		//response zetten naar resultaat CURL
+            
+    		$response = curl_exec($curl);
+
+    		curl_close($curl);
+    		//response omzetten naar ARRAY
+    		$response = json_decode($response, true);
+
+   			return $response; 
 
     }
-    private function val($request){
+    private function validator($request){
     	//set de 2 plaatsnamen
     	$p1 = $request->plaats1;
     	$p2 = $request->plaats2;

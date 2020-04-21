@@ -10,7 +10,6 @@ class APIController extends Controller
     public function show(Request $request){
     	//haal locaties op uit de get request en haalt ze uit elkaar
     	$locations = explode (",", $request->input('location'));  
-
     	//empty array voor historische data
     	$historyarray = [];
 
@@ -42,7 +41,6 @@ class APIController extends Controller
     public function getData(){
     	//haal alle bestaande locaties op uit de database
     	$locations = Location::get();
-    	
     	//loop door de locaties heen
     	foreach ($locations as $location) {
     		//nieuwe curl request
