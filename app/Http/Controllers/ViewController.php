@@ -17,7 +17,7 @@ class ViewController extends Controller
     	//Controleerd het resultaat van de validatie
     	if (is_string($result)) {
     		//stuurt errors terug die de validatie meegestuurd heeft
-    		return back()->withErrors([$result]);
+    		return back()->withErrors([$result])->withInput();
     		
     	}
 
@@ -35,8 +35,13 @@ class ViewController extends Controller
     			$request->plaats1 => 'rgba(252,7,11,',
     			$request->plaats2 => 'rgba(7,134,252,'
     		];
+            $plaatsen = [
+                '1' => $request->plaats1,
+                '2' => $request->plaats2
+            ];
     		//Pushed te color array in het data array om een compleet pakketje te maken
     		array_push($data, $colors);
+            array_push($data, $plaatsen);
 
     		//Stuurt door naar de main view met de opgevraagde data
     		return view('main', compact('data'));
@@ -90,9 +95,7 @@ class ViewController extends Controller
     	elseif(!Location::where('name', $p2)->first() ){
     		return $error = 'Geen data van plaats: '.  $p2;
     	}
-    	else{
-    		//returned true als alle data correct is
-    		return true;
-    	}
+    	
+        return true;
     }
 }

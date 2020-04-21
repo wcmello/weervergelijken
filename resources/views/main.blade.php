@@ -25,7 +25,6 @@
             <div class="row">
                 <div class="col-md-6 col-xl-6" style="padding: 57px;padding-bottom: 0px;height: 91vh;"><img class="rounded-circle" style="margin-right: auto;margin-left: auto;height: 135px;display: block;" src="https://imageog.flaticon.com/icons/png/512/252/252035.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF">
                     
-                    
                     <form style="margin-top: 0;padding: 0px;text-align: center;" action="/" method="post">
 
                         <div class="form-group" style="margin: 0px;margin-top: 30%;">
@@ -34,8 +33,8 @@
                             @endif
                             @csrf
 
-                            <input class="form-control" type="text" name="plaats1" placeholder="Plaats 1" style="text-align: center;">
-                            <input class="form-control" type="text" name="plaats2" placeholder="Plaats 2" style="text-align: center;">
+                            <input class="form-control" type="text" name="plaats1" placeholder="Plaats 1" style="text-align: center;" value="{{\Request::get('plaats1') ?? old('plaats1') ?? ''}}">
+                            <input class="form-control" type="text" name="plaats2" placeholder="Plaats 2" style="text-align: center;" value="{{\Request::get('plaats2') ?? old('plaats2') ?? ''}}">
                             <button class="btn btn-primary" type="submit" style="padding: 9px;margin: 68px;height: 49px;width: 108px;margin-top: 19px;">Vergelijken</button></div>
                     </form>
                 </div>
