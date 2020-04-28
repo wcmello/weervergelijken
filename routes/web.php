@@ -18,16 +18,14 @@ use App\Http\Resources\Data as DataResource;
 |
 */
 
-if (file_exists('../storage/installed')) {
-	Route::get('/', function () {
+Route::get('/', function () {
+	if (file_exists('../storage/installed')) {
 	    return view('main');
-
-	});
-} else {
-	Route::get('/', function () {
-	    return redirect('install');
-	});
-}
+    }
+    else {
+    	return redirect('install');
+    }
+});
 //main route
 
 //main route on post

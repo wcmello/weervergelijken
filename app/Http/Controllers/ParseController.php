@@ -27,16 +27,9 @@ class ParseController extends Controller
 		curl_close($curl);
 		//response omzetten naar ARRAY
 		$response = json_decode($response, true);
-		//set var to show total cities added
-		$loccount = 0;
 		//loop trough city array
 		foreach ($response['value'] as $value) {
-			$location = new Location;
-			$location->name = $value['Title'];
-			$location->save();
-			$loccount++;
+			Location::create(['name' => $value['Title']]);
 		}
-		//show cities saved 
-		echo "Saved " . $loccount . " New Locations";
     }
 }

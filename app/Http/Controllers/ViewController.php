@@ -22,8 +22,7 @@ class ViewController extends Controller
     	}
 
     	//als er geen errors zijn word dit uitgevoerd
-    	else
-    	{
+    
     		//maakt een data array aan
     		$data = [];
 
@@ -45,7 +44,7 @@ class ViewController extends Controller
 
     		//Stuurt door naar de main view met de opgevraagde data
     		return view('main', compact('data'));
-    	}
+    	
     }
     private function request($loc1, $loc2){
 
@@ -79,20 +78,23 @@ class ViewController extends Controller
     	$p1 = $request->plaats1;
     	$p2 = $request->plaats2;
 
+        $loc1 = Location::where('name', $p1)->first();
+        $loc2 = Location::where('name', $p2)->first();
+
     	//check of de plaatsnamen beide zijn ingevoerd
     	if ($p1 == "" || $p2 == "") {
     		return $error = 'Voer alle 2 plaatsen in';
     	}
     	//check of beide locaties bestaan
-    	elseif(!Location::where('name', $p1)->first() && !Location::where('name', $p2)->first()){
+    	elseif(!$loc1 && !$loc2){
     		return $error = 'Geen data van plaats: ' . $p1 . " & " . $p2;
     	}
     	//checked individueel locatie nr 1
-    	elseif(!Location::where('name', $p1)->first()){
+    	elseif(!$loc1){
     		return $error = 'Geen data van plaats: ' . $p1;
     	}
     	//checked individueel locatie nr 2
-    	elseif(!Location::where('name', $p2)->first() ){
+    	elseif(!$loc2 ){
     		return $error = 'Geen data van plaats: '.  $p2;
     	}
     	

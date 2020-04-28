@@ -13,20 +13,30 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $loc = ['Gorredijk', 'Heerenveen'];
-    	foreach ($loc as $l) {
-    		$location = new Location;
-    		$location->name = $l;
-    		$location->save();
+        //nieuwe curl request
+          $curl = curl_init();
+          curl_setopt_array($curl, array(
+        //curl URL haalt URL en KEY uit .env file
+          CURLOPT_URL => "https://opendata.cbs.nl/ODataApi/OData/84489NED/Woonplaatsen",
+          CURLOPT_RETURNTRANSFER => true,
+          CURLOPT_ENCODING => "",
+          CURLOPT_MAXREDIRS => 10,
+          CURLOPT_TIMEOUT => 0,
+          CURLOPT_FOLLOWLOCATION => true,
+          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+          CURLOPT_CUSTOMREQUEST => "GET",
+        ));
+        //response zetten naar resultaat CURL
+        $response = curl_exec($curl);
 
-            $data = new Data;
-
-            $data->location_id = $location->id;
-            $data->temp = 0;
-            $data->rainChance = 0;
-            $data->dateTime = now();
-            $data->save();
-    	}
+        curl_close($curl);
+        //response omzetten naar ARRAY
+        $response = json_decode($response, true);
+        //loop trough city array
+        foreach ($response['value'] as $value) {
+            $loc = Location::create(['name' => $value['Title']]);
+            Data::create(['location_id' => $loc->id, 'temp' => 0, 'rainChance' => 0, 'dateTime' => now()]);
+        }
 
     }
 }
